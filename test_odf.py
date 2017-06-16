@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from unittest import TestCase
 
+from pandas import Timestamp, Timedelta
 import pandasodf
 
 
@@ -16,12 +17,12 @@ class TestODF(TestCase):
         self.assertEqual(sheet[0][0], 1.0)
         self.assertEqual(sheet[0][1], 1.25)
         self.assertEqual(sheet[0][2], 'a')
-        self.assertEqual(sheet[0][3], datetime(2003, 1, 2))
+        self.assertEqual(sheet[0][3], Timestamp(2003, 1, 2))
         self.assertEqual(sheet[0][4], False)
         self.assertEqual(sheet[0][5], 0.35)
-        self.assertEqual(sheet[0][6], timedelta(hours=3, minutes=45))
-        self.assertEqual(sheet[1][6], timedelta(hours=17, minutes=53))
-        self.assertEqual(sheet[2][6], timedelta(hours=14, minutes=8))
+        self.assertEqual(sheet[0][6], Timedelta(hours=3, minutes=45))
+        self.assertEqual(sheet[1][6], Timedelta(hours=17, minutes=53))
+        self.assertEqual(sheet[2][6], Timedelta(hours=14, minutes=8))
 
         # though what should the value of a hyperlink be?
         self.assertEqual(sheet[0][7], 'UBERON:0002101')
