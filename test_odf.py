@@ -5,7 +5,9 @@ import pandasodf
 
 
 class TestODF(TestCase):
-    def test_types(self):
+    def test_read_types(self):
+        """Make sure we read ODF data types correctly
+        """
         book = pandasodf.ODFReader('datatypes.ods')
         self.assertEquals(len(book.sheet_names), 1)
         self.assertEquals(book.sheet_names, ['Sheet1'])
@@ -24,13 +26,23 @@ class TestODF(TestCase):
         # though what should the value of a hyperlink be?
         self.assertEqual(sheet[0][7], 'UBERON:0002101')
 
-    def test_lower_diagonal(self):
+    def test_read_lower_diagonal(self):
+        """TextParser failed when given an irregular list of lists
+
+        Make sure we can parse:
+        1
+        2 3
+        4 5 6
+        7 8 9 10
+        """
         book = pandasodf.ODFReader('lowerdiagonal.ods')
         sheet = book.parse('Sheet1', index_col=None, header=None)
 
         self.assertEqual(sheet.shape, (4,4))
 
-    def test_headers(self):
+    def test_read_headers(self):
+        """Do we read headers correctly?
+        """
         book = pandasodf.ODFReader('headers.ods')
         self.assertEquals(len(book.sheet_names), 1)
         self.assertEquals(book.sheet_names, ['Sheet1'])
@@ -45,7 +57,11 @@ class TestODF(TestCase):
         self.assertEqual(sheet['Column 4'][0], 7.0)
         self.assertEqual(sheet['Column 4'][1], 8.0)
 
-    def test_writer_table(self):
+    def test_read_writer_table(self):
+        """ODF reuses the same table tags in Writer and Presentation files
+
+        Test reading a table out of a text document
+        """
         doc = pandasodf.ODFReader('writertable.odt')
         table = doc.parse('Table1', index_col=0)
 
