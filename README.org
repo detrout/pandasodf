@@ -1,0 +1,3 @@
+* Introduction
+
+This is some prototype code for reading ODF tables into Pandas DataFrames
