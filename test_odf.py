@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from unittest import TestCase
-
+import pandas
 from pandas import Timestamp, Timedelta
+import numpy
 import pandasodf
 
 
@@ -74,8 +75,8 @@ class TestODF(TestCase):
         self.assertEqual(table['Column 3'][1], 8.0)
         self.assertEqual(table['Column 3'][2], 9.0)
 
-        # FIXME: What should the column heading for an empty column be?
-        #self.assertEqual(table[''][0], '')
+        # make sure pandas gives a name to the unnamed column
+        self.assertTrue(pandas.isnull(table['Unnamed: 2'][0]))
         
     def test_parse_isoduration(self):
         #pandasodf.parse.isoduration('P1347Y')
