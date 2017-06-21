@@ -77,9 +77,10 @@ class TestODF(TestCase):
 
         # make sure pandas gives a name to the unnamed column
         self.assertTrue(pandas.isnull(table['Unnamed: 2'][0]))
-        
+
     def test_parse_isoduration(self):
-        #pandasodf.parse.isoduration('P1347Y')
+        # FIXME: Implement parsing years
+        # pandasodf.parse.isoduration('P1347Y')
         self.assertEqual(
             pandasodf.parse_isoduration('-P120D'),
             timedelta(days=-120))
@@ -91,4 +92,3 @@ class TestODF(TestCase):
         self.assertEqual(
             pandasodf.parse_isoduration('PT1H30M55S'),
             timedelta(hours=1, minutes=30, seconds=55))
-
