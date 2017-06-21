@@ -49,7 +49,7 @@ class ODFReader:
               names=None, index_col=None, parse_cols=None, parse_dates=False,
               date_parser=None, na_values=None, thousands=None,
               convert_float=True, has_index_names=None,
-              converters=None, true_values=None, false_values=None,
+              true_values=None, false_values=None,
               squeeze=False, **kwds):
 
         data = self.__get_sheet(sheetname)
