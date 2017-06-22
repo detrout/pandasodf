@@ -90,8 +90,7 @@ def get_table(sheet):
                 if empty_cells > 0:
                     table_row.extend([None]*empty_cells)
                     empty_cells = 0
-                assert column_repeat == 1
-                table_row.append(value)
+                table_row.extend([value] * column_repeat)
 
         if max_row_len < len(table_row):
             max_row_len = len(table_row)

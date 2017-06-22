@@ -92,3 +92,16 @@ class TestODF(TestCase):
         self.assertEqual(
             pandasodf.parse_isoduration('PT1H30M55S'),
             timedelta(hours=1, minutes=30, seconds=55))
+
+    def test_runlengthencoding(self):
+        """Calc will use repeat when adjacent columns have the same value.
+        """
+        book = pandasodf.ODFReader('runlengthencoding.ods')
+        self.assertEquals(book.sheet_names, ['Sheet1'])
+        sheet = book.parse('Sheet1', header=None)
+        self.assertEqual(sheet.shape, (5, 3))
+        # check by column, not by row.
+        self.assertEqual(list(sheet[0]), [1.0, 1.0, 2.0, 2.0, 2.0])
+        self.assertEqual(list(sheet[1]), [1.0, 2.0, 2.0, 2.0, 2.0])
+        self.assertEqual(list(sheet[2]), [1.0, 2.0, 2.0, 2.0, 2.0])
+
