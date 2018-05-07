@@ -3,14 +3,16 @@ from unittest import TestCase
 import pandas
 from pandas import Timestamp, Timedelta
 import numpy
+from pkg_resources import resource_filename
 import pandasodf
-
+import pandasodf.odfreader
 
 class TestODF(TestCase):
     def test_read_types(self):
         """Make sure we read ODF data types correctly
         """
-        book = pandasodf.ODFReader('datatypes.ods')
+        filename = resource_filename(__name__, 'datatypes.ods')
+        book = pandasodf.ODFReader(filename)
         self.assertEquals(len(book.sheet_names), 1)
         self.assertEquals(book.sheet_names, ['Sheet1'])
         sheet = book.parse('Sheet1', header=None)
@@ -37,7 +39,8 @@ class TestODF(TestCase):
         4 5 6
         7 8 9 10
         """
-        book = pandasodf.ODFReader('lowerdiagonal.ods')
+        filename = resource_filename(__name__, 'lowerdiagonal.ods')
+        book = pandasodf.ODFReader(filename)
         sheet = book.parse('Sheet1', index_col=None, header=None)
 
         self.assertEqual(sheet.shape, (4,4))
@@ -45,7 +48,8 @@ class TestODF(TestCase):
     def test_read_headers(self):
         """Do we read headers correctly?
         """
-        book = pandasodf.ODFReader('headers.ods')
+        filename = resource_filename(__name__, 'headers.ods')
+        book = pandasodf.ODFReader(filename)
         self.assertEquals(len(book.sheet_names), 1)
         self.assertEquals(book.sheet_names, ['Sheet1'])
         sheet = book.parse('Sheet1', index_col=0)
@@ -64,7 +68,8 @@ class TestODF(TestCase):
 
         Test reading a table out of a text document
         """
-        doc = pandasodf.ODFReader('writertable.odt')
+        filename = resource_filename(__name__, 'writertable.odt')
+        doc = pandasodf.ODFReader(filename)
         table = doc.parse('Table1', index_col=0)
 
         self.assertEqual(table.shape, (3,3))
@@ -82,21 +87,22 @@ class TestODF(TestCase):
         # FIXME: Implement parsing years
         # pandasodf.parse.isoduration('P1347Y')
         self.assertEqual(
-            pandasodf.parse_isoduration('-P120D'),
+            pandasodf.odfreader.parse_isoduration('-P120D'),
             timedelta(days=-120))
 
         self.assertEqual(
-            pandasodf.parse_isoduration('P0Y0M3D'),
+            pandasodf.odfreader.parse_isoduration('P0Y0M3D'),
             timedelta(days=3))
 
         self.assertEqual(
-            pandasodf.parse_isoduration('PT1H30M55S'),
+            pandasodf.odfreader.parse_isoduration('PT1H30M55S'),
             timedelta(hours=1, minutes=30, seconds=55))
 
     def test_runlengthencoding(self):
         """Calc will use repeat when adjacent columns have the same value.
         """
-        book = pandasodf.ODFReader('runlengthencoding.ods')
+        filename = resource_filename(__name__, 'runlengthencoding.ods')
+        book = pandasodf.ODFReader(filename)
         self.assertEquals(book.sheet_names, ['Sheet1'])
         sheet = book.parse('Sheet1', header=None)
         self.assertEqual(sheet.shape, (5, 3))
