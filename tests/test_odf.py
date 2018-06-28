@@ -6,6 +6,7 @@ from pkg_resources import resource_filename
 import pandasodf
 import pandasodf.odfreader
 
+
 class TestODF(TestCase):
     def test_read_types(self):
         """Make sure we read ODF data types correctly
@@ -42,7 +43,7 @@ class TestODF(TestCase):
         book = pandasodf.ODFReader(filename)
         sheet = book.parse('Sheet1', index_col=None, header=None)
 
-        self.assertEqual(sheet.shape, (4,4))
+        self.assertEqual(sheet.shape, (4, 4))
 
     def test_read_headers(self):
         """Do we read headers correctly?
@@ -71,7 +72,7 @@ class TestODF(TestCase):
         doc = pandasodf.ODFReader(filename)
         table = doc.parse('Table1', index_col=0)
 
-        self.assertEqual(table.shape, (3,3))
+        self.assertEqual(table.shape, (3, 3))
         self.assertEqual(table['Column 1'][0], 1.0)
         self.assertEqual(table['Column 1'][1], 2.0)
         self.assertEqual(table['Column 1'][2], 3.0)
@@ -109,4 +110,3 @@ class TestODF(TestCase):
         self.assertEqual(list(sheet[0]), [1.0, 1.0, 2.0, 2.0, 2.0])
         self.assertEqual(list(sheet[1]), [1.0, 2.0, 2.0, 2.0, 2.0])
         self.assertEqual(list(sheet[2]), [1.0, 2.0, 2.0, 2.0, 2.0])
-
