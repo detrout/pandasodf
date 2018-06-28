@@ -1,8 +1,7 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from unittest import TestCase
 import pandas
 from pandas import Timestamp, Timedelta
-import numpy
 from pkg_resources import resource_filename
 import pandasodf
 import pandasodf.odfreader

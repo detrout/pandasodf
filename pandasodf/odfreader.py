@@ -1,4 +1,3 @@
-from argparse import ArgumentParser
 import pandas
 from pandas.io.parsers import TextParser
 from odf.opendocument import load
