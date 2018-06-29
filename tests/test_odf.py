@@ -83,6 +83,14 @@ class TestODF(TestCase):
         # make sure pandas gives a name to the unnamed column
         self.assertTrue(pandas.isnull(table['Unnamed: 2'][0]))
 
+    def test_blank_row_repeat(self):
+        filename = resource_filename(__name__, 'blank-row-repeat.ods')
+        book = pandasodf.ODFReader(filename)
+        table = book.parse('Biosamples')
+
+        self.assertEqual(table.shape, (8, 9))
+        self.assertEqual(table['biosample_accession'][7], 9.0)
+
     def test_parse_isoduration(self):
         # FIXME: Implement parsing years
         # pandasodf.parse.isoduration('P1347Y')
