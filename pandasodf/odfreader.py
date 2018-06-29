@@ -116,10 +116,11 @@ def get_table(sheet):
 def is_empty_row(row):
     """Helper function to find empty rows
     """
-    if len(row.childNodes) == 1 and len(row.childNodes[0].childNodes) == 0:
-        return True
-    else:
-        return False
+    for column in row.childNodes:
+        if len(column.childNodes) > 0:
+            return False
+
+    return True
 
 
 def get_row_repeat(row):
